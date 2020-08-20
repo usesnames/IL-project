@@ -76,13 +76,13 @@ class iCaRLNet(nn.Module):
       preds = self.classify_KNN(x)
     elif self.classifier_name == 'svm':
       preds = self.classify_SVM(x)
-    elif self.classifier_name == 'tree':
-      preds = self.classify_tree(x)
+    elif self.classifier_name == 'trees':
+      preds = self.classify_trees(x)
     elif self.classifier_name == 'standard':
       preds = self.classify_standard(x)
     else:
       preds = None
-      raise Exception("Classifier not found, possible values are 'standard', 'knn', 'svm', 'tree', you wrote {}".format(self.classifier_name))
+      raise Exception("Classifier not found, possible values are 'standard', 'knn', 'svm', 'trees', you wrote {}".format(self.classifier_name))
     return preds
 
   
@@ -107,7 +107,7 @@ class iCaRLNet(nn.Module):
     return torch.FloatTensor([self.order[i] for i in preds])
 
 
-  def classify_tree(self, x):
+  def classify_trees(self, x):
     self.resnet.train(False)
     if self.initialize_classifier:
       #self.classifier = DecisionTreeClassifier(min_samples_split=(2000/self.n_known)) 
@@ -260,7 +260,6 @@ class iCaRLNet(nn.Module):
       old_net = deepcopy(self.resnet)
       old_net.eval()
 
-      #self.increment_classes()
     
     # Run network training
     if self.loss == 'ce+bce':
