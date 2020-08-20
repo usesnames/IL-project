@@ -200,7 +200,7 @@ class LFiCaRLNet(nn.Module):
 
         if self.n_known > 0:
           self.resnet.train(False)
-          l = 3*(np.sqrt(self.n_known/self.n_classes))
+          l = 6*(np.sqrt(self.n_known/self.n_classes))
           new_features = self.forward(images, feature_extractor=True)
           new_features = new_features.data/new_features.data.norm()
           old_features = old_net(images, feature_extractor=True)
